@@ -1,0 +1,85 @@
+# ═══════════════════════════════════════════════════════════════
+#  WorldGuard region template
+#
+#  Flag reasoning: an island must deny everything by default and
+#  grant explicitly. The reverse ordering is how skyblock servers end
+#  up with players TNT-ing each other's islands from outside the
+#  protection radius.
+# ═══════════════════════════════════════════════════════════════
+
+regions:
+  # Global region: applies to the whole skyblock world and is the
+  # fallback for anything not covered by an island region.
+  __global__:
+    priority: 0
+    flags:
+      build: deny
+      pvp: deny
+      creeper-explosion: deny
+      wither-damage: deny
+      tnt: deny
+      lighter: deny
+      mob-spawning: allow
+      chest-access: deny
+      use: deny
+      interact: deny
+      item-frame-rotation: deny
+      ride: deny
+      sleep: deny
+      vehicle-place: deny
+      vehicle-destroy: deny
+      enderpearl: allow
+      chorus-fruit-teleport: allow
+      invincible: deny
+      fall-damage: allow
+      entry: allow
+      exit: allow
+      greeting: '&7Entering unclaimed space.'
+      farewell: ''
+
+  # Template applied to each generated island, parameterised by owner.
+  island-template:
+    priority: 10
+    # Members are added via the island plugin, not hardcoded here.
+    owners: ['%owner_uuid%']
+    flags:
+      build: deny
+      # allow-only-members is expressed by denying build globally and
+      # letting WorldGuard's owner/member check grant it.
+      pvp: deny
+      creeper-explosion: deny
+      enderdragon-block-damage: deny
+      wither-damage: deny
+      ghast-fireball: deny
+      tnt: deny
+      lighter: allow
+      fire-spread: deny
+      lava-fire: deny
+      snow-melt: deny
+      ice-melt: deny
+      mob-damage: allow
+      mob-spawning: allow
+      chest-access: deny
+      use: allow
+      interact: allow
+      ride: allow
+      sleep: allow
+      item-drop: allow
+      item-pickup: allow
+      exp-drops: allow
+      greeting: '&a%owner%&7''s island'
+      farewell: '&7Leaving &a%owner%&7''s island'
+
+  # Spawn hub: read-only, no gameplay.
+  spawn:
+    priority: 100
+    flags:
+      build: deny
+      pvp: deny
+      mob-spawning: deny
+      hunger-drain: deny
+      invincible: allow
+      fall-damage: deny
+      item-drop: deny
+      chest-access: deny
+      greeting: '&bWelcome to CodeHub Skyblock'
