@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════
+#  Island generation and placement
+#
+#  Grid spacing is the decision that cannot be changed later without
+#  regenerating the world. 400 blocks at a 200-block protection
+#  radius leaves a 200-block gap, which is wide enough that a
+#  neighbour's mob farm does not consume your spawn cap and close
+#  enough that the world does not sprawl into millions of regions.
+# ═══════════════════════════════════════════════════════════════
+
+world:
+  name: 'skyblock_world'
+  # VOID is required: a normal generator would fill the gaps between
+  # islands with terrain, which defeats the point and multiplies
+  # chunk-generation cost.
+  environment: NORMAL
+  generator: 'VoidGenerator'
+  difficulty: NORMAL
+
+grid:
+  spacing: 400
+  protection-radius: 200
+  # Islands sit at y=120 so players have room to build both up and
+  # down within the vanilla height limits.
+  island-height: 120
+  start-x: 0
+  start-z: 0
+
+generation:
+  # Pasting a schematic is thousands of block writes; doing it on the
+  # main thread stalls the server for every new island. Chunked async
+  # placement keeps island creation invisible to other players.
+  async-paste: true
+  blocks-per-tick: 4000
+
+  # Pre-generate the chunk before pasting so the paste does not
+  # trigger a synchronous chunk load.
+  pregenerate-chunks: true
+  chunk-radius: 2
+
+  # Islands beyond this distance from any online player unload.
+  unload-distance: 300
+
+schematics:
+  default: 'classic'
+  available:
+    - classic
+    - desert
+    - mushroom
+    - nether
+
+limits:
+  # Per-island entity caps. Without these, one player's iron farm
+  # becomes everyone's TPS problem, because the mob cap is shared
+  # per-world unless per-player spawning is enabled.
+  hoppers-per-island: 64
+  entities-per-island: 150
+  minecarts-per-island: 16
+  spawners-per-island: 24
+
+  members-per-island: 8
+  island-radius-expansion:
+    enabled: true
+    max-radius: 200
+    cost-per-expansion: 50000
