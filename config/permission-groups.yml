@@ -1,0 +1,76 @@
+# ═══════════════════════════════════════════════════════════════
+#  Skyblock permission groups
+#
+#  Deliberately flat: default -> member -> vip -> mvp. Deep
+#  hierarchies are hard to audit, and on a skyblock server almost
+#  every meaningful difference is a numeric limit rather than a new
+#  capability.
+# ═══════════════════════════════════════════════════════════════
+
+groups:
+  default:
+    weight: 0
+    permissions:
+      - 'skyblock.island.create'
+      - 'skyblock.island.home'
+      - 'skyblock.island.invite'
+      - 'skyblock.island.level'
+      - 'essentials.spawn'
+      - 'essentials.help'
+    meta:
+      island-member-limit: '4'
+      island-hopper-limit: '32'
+      island-expansion-max: '100'
+
+  member:
+    weight: 10
+    parent: default
+    permissions:
+      - 'skyblock.island.sethome'
+      - 'skyblock.island.biome'
+      - 'essentials.tpa'
+      - 'essentials.msg'
+    meta:
+      island-member-limit: '6'
+      island-hopper-limit: '48'
+      island-expansion-max: '150'
+
+  vip:
+    weight: 50
+    parent: member
+    permissions:
+      - 'skyblock.island.sethome.multiple'
+      - 'skyblock.island.schematic.desert'
+      - 'skyblock.island.schematic.mushroom'
+      - 'essentials.kit.vip'
+      - 'essentials.fly.safelogin'
+    meta:
+      island-member-limit: '8'
+      island-hopper-limit: '64'
+      island-expansion-max: '200'
+      sell-multiplier: '1.15'
+
+  mvp:
+    weight: 100
+    parent: vip
+    permissions:
+      - 'skyblock.island.schematic.nether'
+      - 'skyblock.island.cobblegen.tier3'
+      - 'essentials.kit.mvp'
+      - 'essentials.nick'
+    meta:
+      island-member-limit: '12'
+      island-hopper-limit: '96'
+      island-expansion-max: '200'
+      sell-multiplier: '1.30'
+
+  moderator:
+    weight: 500
+    parent: mvp
+    permissions:
+      - 'skyblock.admin.bypass'
+      - 'worldguard.region.bypass.*'
+      - 'essentials.vanish'
+      - 'essentials.mute'
+      - 'essentials.kick'
+      - 'sentinel.admin'
